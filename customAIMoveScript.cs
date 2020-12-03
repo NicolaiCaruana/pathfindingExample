@@ -18,7 +18,8 @@ public class customAIMoveScript : MonoBehaviour
 
     GameObject targetNode;
 
-    bool isMoving = false;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,19 +27,21 @@ public class customAIMoveScript : MonoBehaviour
 
         seeker = GetComponent<Seeker>();
 
+
+        //node target
         targetNode = GameObject.FindGameObjectWithTag("targetnode");
 
         graphParent = GameObject.Find("PointGraphObject");
 
         graphParent.GetComponent<AstarPath>().Scan();
 
-        pathToFollow = seeker.StartPath(transform.position, target.position, pathCompleted);
+        pathToFollow = seeker.StartPath(transform.position, target.position);
 
         StartCoroutine(moveTarget());
 
         StartCoroutine(updateGraph());
 
-        StartCoroutine(moveTowardsPathAI(this.transform));
+        StartCoroutine(moveTowardsEnemy(this.transform));
     }
 
     //the code that is going to move my target.
@@ -50,16 +53,15 @@ public class customAIMoveScript : MonoBehaviour
 
         positions.Add(new Vector3(target.position.x, -target.position.y));
     
-        StartCoroutine(moveTowardsPath(target.transform, positions));
+        StartCoroutine(moveTarget(target.transform, positions,true));
+
+       
 
         yield return null;
 
     }
 
-    void pathCompleted(Path p)
-    {
-        pathToFollow = p;
-    }
+
 
     IEnumerator updateGraph()
     {
@@ -76,50 +78,78 @@ public class customAIMoveScript : MonoBehaviour
 
     }
 
-    IEnumerator moveTowardsPath(Transform t, List<Vector3> points)
+    IEnumerator moveTarget(Transform t, List<Vector3> points,bool loop)
     {
-        foreach (Vector3 position in points)
+        if (loop)
         {
-            while (Vector3.Distance(t.position, position) > 0.5f)
+            while (true)
             {
-                t.position = Vector3.MoveTowards(t.position, position, 1f);
-                Debug.Log(position);/**/
-                yield return new WaitForSeconds(0.2f);
+                List<Vector3> forwardpoints = points;
+                
+                foreach (Vector3 position in forwardpoints)
+                {
+                    while (Vector3.Distance(t.position, position) > 0.5f)
+                    {
+                        t.position = Vector3.MoveTowards(t.position, position, 1f);
+                        Debug.Log(position);/**/
+                        yield return new WaitForSeconds(0.2f);
+                    }
+                }
+                forwardpoints.Reverse();
+                yield return null;
+                
             }
+        } else
+        {
+            foreach (Vector3 position in points)
+            {
+                while (Vector3.Distance(t.position, position) > 0.5f)
+                {
+                    t.position = Vector3.MoveTowards(t.position, position, 1f);
+                    /**/
+                    yield return new WaitForSeconds(0.2f);
+                }
+            }
+            yield return null;
         }
-        yield return null;
+
+       
     }
 
 
-    IEnumerator moveTowardsPathAI(Transform t)
+    IEnumerator moveTowardsEnemy(Transform t)
     {
         
         while (true)
         {
             
             List<Vector3> posns = pathToFollow.vectorPath;
+            Debug.Log("Positions Count: " + posns.Count);
             for (int counter = 0; counter < posns.Count;counter++)
             {
-                while(Vector3.Distance(t.position,posns[counter])>0.5f)
+               // Debug.Log("Distance: " + Vector3.Distance(t.position, posns[counter]));
+                while(Vector3.Distance(t.position,posns[counter]) >= 0.5f)
                 {
                     t.position = Vector3.MoveTowards(t.position, posns[counter], 1f);
                          
-                    pathToFollow = seeker.StartPath(transform.position, target.position, pathCompleted);
-                    yield return pathToFollow.IsDone();
+                    pathToFollow = seeker.StartPath(t.position, target.position);
+                    yield return seeker.IsDone();
                     posns = pathToFollow.vectorPath;
-                    
+                    Debug.Log("@"+t.position +" "+target.position + " "+posns[counter]);
                     yield return new WaitForSeconds(0.2f);
                 }
+                //keep looking for a path because if we have arrived the enemy will anyway move away
+                pathToFollow = seeker.StartPath(t.position, target.position);
+                yield return seeker.IsDone();
+                posns = pathToFollow.vectorPath;
+
 
             }
             yield return null;
         }
     }
 
-void Update()
-{
-       
-}
+
 }
 
 
