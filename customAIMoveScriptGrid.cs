@@ -5,7 +5,7 @@ using UnityEngine;
 using Pathfinding;
 
 
-public class customAIMoveScript : MonoBehaviour
+public class customAIMoveScriptGrid : MonoBehaviour
 {
     //the object that we are using to generate the path
     Seeker seeker;
@@ -39,8 +39,8 @@ public class customAIMoveScript : MonoBehaviour
         targetNode = GameObject.Find("TargetNode");
 
         //find the parent node of the point graph
-         graphParent = GameObject.Find("PointGraphObject");
-        //graphParent = GameObject.Find("AStarGrid");
+         //graphParent = GameObject.Find("PointGraphObject");
+        graphParent = GameObject.Find("AStarGrid");
         //we scan the graph to generate it in memory
         graphParent.GetComponent<AstarPath>().Scan();
 
@@ -89,7 +89,7 @@ public class customAIMoveScript : MonoBehaviour
         while (true)
         {
 
-          targetNode.transform.position = target.position;
+      //   targetNode.transform.position = target.position;
             graphParent.GetComponent<AstarPath>().Scan();
 
 

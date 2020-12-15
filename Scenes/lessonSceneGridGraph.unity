@@ -277,6 +277,7 @@ GameObject:
   - component: {fileID: 266002519}
   - component: {fileID: 266002518}
   - component: {fileID: 266002520}
+  - component: {fileID: 266002521}
   m_Layer: 0
   m_Name: Robot
   m_TagString: Untagged
@@ -447,9 +448,23 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 266002513}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 430ca61e4228d3b4a8b061b6accc20be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 2043172689}
+  obstacleNodes: []
+--- !u!114 &266002521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266002513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05ca4f8e9b6907e4d8b7f84243c036a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 2043172689}
@@ -499,7 +514,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAAAIIexXOG8lSAIAAPAEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VEtz2jAQ/iuMzqWDTQpDby0Q0kMSJjSTiy9CWmMNsuTRIzwy/PeuZBs7dHJi2e/b3W8f8gcRylbAnDYrI/ij5kB+DkiwybdBBz7Ake602ogztJw3wV0RSDRyXqgTGv1JCLO6BGcE+6V2MpBH6PRK5NqUS76DubbOojun0gJCRrsQrdD1MSBH/BnOQsgJrXQarDNas9HggiYD5cB01JbY0mqWV0zSsgIeJHfkZNTS0YpEhe00nCCdaSmFbbQQd6piry/0FDrlgmJfsXjgFiB2hQsa+4HPeW7BNYIMPS2EwfHUGclvXc+spHZfq3qn0oca6Y9J1FMnffwPHyYRzo0uH9q6dTeuEGyPChm1rjfUvnvxWbhXByr3dCvhrQD1pFdGe8URdMaHUG8hXXR/r63NC2D7zl9LvXH66uvVhB4usfvjXIpyG6Dvd7VjI3WcdVw8GNzKHxQcz8I2KdAbVLxa+Et3/ftpgHthrEOo6VIFeVvtTaCSezTC5Jl3c20UmH6CChSV7rTGNO52hTfY11H3NLyUpniDtQ/gJiS6O/5odAOt9eG6LFvowyPY4tk7KRR0kw7AE85prpWqL6zfUhu28SanrBe284J/Pi2Scs5m49l0Oxnxu3ScDNNZejedbCfjWTKdJGlC4u0JhX1Sua6FNuPBrakuucI7az8gg5WhVbx2buhhJc6lth1TqFxvmAFQz3WGq3AwWARfJF9ygQPagHNCxX2Tj4xIzfbAs2uiLHa6PDpDsy5LRirxrl3wZGQevxgZuZDLP1BLAwQUAAAICAAACCHsyyBj1W0AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNVRUEovSizIKAaKGII4pZkpIHa0klFKSrKlsaV5kplBiomRsaGukaWRiblZkpmxpaG5maGRoVIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAACCHsVzhvJUgCAADwBAAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAACCHsyyBj1W0AAAB4AAAACQAkAAAAAAAAAAAAAACVAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAE0DAAAAAA==
+    dataString: UEsDBBQAAAgIAAAIIexBLzmRSQIAAO4EAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VEtz2jAQ/iuMzk0HOwGG3logpAeSTGgnF1+EtMYaZMmjR3gN/70r2cYOnZy83u/b3W8f9pkIZStgTpulEXylOZAfAxJs8m3QgU9woFut1uIELeddcFcEEo2cN+qERn8SwqwuwRnBfqqtDOQhOr0SuTblgm9hpq2z6M6ptICQ0S5EK3SdB+SAj7tpCDmilU6CdUJrOhxc0GSgHJiO2hJbWs3yiklaVsCD5I48atmjmqawmYYRhDMtpbCNEuKOVez0jR5Dn1xQ7CqWDtwCxLZwQWE/8CXPLbhGjqHHuTA4nDoj+aXriZXU7mpNH1T6UCMdjaOeOunqP/wuiXBudPnU1k2GoYYrBNuhQkat6420755/Fu7Vnsod3Uh4L0A966XRXnEEnfEh1FtI593rtbVZAWzX+WupN05ffb2Y0MMldn+YSVFuAvT9oXaspY6zjmsHg1v5jYLjUdgmBXqDir8W/tBt/3oa4FEY6xBqulRB3kZ7E6jkEY0weebdTBsFpp+gAkWlO75iGne7whvs66hHGr6TpniDted/ExLdHX84vIFe9f66LFvo/Qps8eKdFAq6SQfgGec000rVF9ZvqQ1be5NT1gvbesE/nxZJOWfT++lkMx7yh/Q+uUun6cNkvBnfT5PJOEkTEm9PKOyTytdaaDMe3Jrqkiu8s/b3MVgaWsVr54bul+JUatsxhcr1mhkA9VJnuAoHg0Xwi+QLLnBAa3BOqLhvcs6I1GwHPLsmymKni4MzNOuyZKQSH9oFT0Zm8X+RkQu5/ANQSwMEFAAACAgAAAgh7MsgY9VtAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTVUVBKL0osyCgGihiCOKWZKSB2tJJRSkqypbGleZKZQYqJkbGhrpGlkYm5WZKZsaWhuZmhkaFSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAAAgh7EEvOZFJAgAA7gQAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAAgh7MsgY9VtAAAAeAAAAAkAJAAAAAAAAAAAAAAAlgIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAABOAwAAAAA=
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -733,7 +748,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 50
+  orthographic size: 100
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
