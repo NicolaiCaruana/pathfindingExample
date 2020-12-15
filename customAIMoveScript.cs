@@ -22,12 +22,13 @@ public class customAIMoveScript : MonoBehaviour
     //the node of the graph that is going to correspond with the green box
     GameObject targetNode;
 
+    public List<Transform> obstacleNodes;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
         Debug.Log(this.name);
 
         //the instance of the seeker attached to this game object
@@ -38,8 +39,8 @@ public class customAIMoveScript : MonoBehaviour
         targetNode = GameObject.Find("TargetNode");
 
         //find the parent node of the point graph
-        graphParent = GameObject.Find("PointGraphObject");
-
+        // graphParent = GameObject.Find("PointGraphObject");
+        graphParent = GameObject.Find("AStarGrid");
         //we scan the graph to generate it in memory
         graphParent.GetComponent<AstarPath>().Scan();
 
@@ -67,13 +68,15 @@ public class customAIMoveScript : MonoBehaviour
         //adding another position (the bottom position)
         positions.Add(new Vector3(target.position.x, -target.position.y));
 
+        
+
         //Class Task 1: Add another 5 positions to the circuit
         //Class Task 2: Build a coroutine that will move the white obstacle up and down, INCLUDING the 4 nodes 
 
         //starting position, the list of positions and a boolean parameter stating if the path is looped
-        StartCoroutine(moveTarget(target.transform, positions,true));
+        StartCoroutine(moveTarget(target.transform, positions, true));
 
-       
+
 
         yield return null;
 
@@ -83,20 +86,20 @@ public class customAIMoveScript : MonoBehaviour
 
     IEnumerator updateGraph()
     {
-        while(true)
-        { 
-            
+        while (true)
+        {
+
             targetNode.transform.position = target.position;
             graphParent.GetComponent<AstarPath>().Scan();
-            
-            
+
+
             yield return null;
-            
+
         }
 
     }
 
-    IEnumerator moveTarget(Transform t, List<Vector3> points,bool loop)
+    IEnumerator moveTarget(Transform t, List<Vector3> points, bool loop)
     {
         if (loop)
         {
@@ -104,7 +107,7 @@ public class customAIMoveScript : MonoBehaviour
             while (true)
             {
                 List<Vector3> forwardpoints = points;
-                
+
                 foreach (Vector3 position in forwardpoints)
                 {
                     while (Vector3.Distance(t.position, position) > 0.5f)
@@ -117,9 +120,10 @@ public class customAIMoveScript : MonoBehaviour
                 //reverse the points supplied here
                 forwardpoints.Reverse();
                 yield return null;
-                
+
             }
-        } else
+        }
+        else
         {
             foreach (Vector3 position in points)
             {
@@ -133,22 +137,22 @@ public class customAIMoveScript : MonoBehaviour
             yield return null;
         }
 
-       
+
     }
 
 
     IEnumerator moveTowardsEnemy(Transform t)
     {
-        
+
         while (true)
         {
-            
+
             List<Vector3> posns = pathToFollow.vectorPath;
             Debug.Log("Positions Count: " + posns.Count);
-            for (int counter = 0; counter < posns.Count;counter++)
+            for (int counter = 0; counter < posns.Count; counter++)
             {
-               // Debug.Log("Distance: " + Vector3.Distance(t.position, posns[counter]));
-                while(Vector3.Distance(t.position,posns[counter]) >= 0.5f)
+                // Debug.Log("Distance: " + Vector3.Distance(t.position, posns[counter]));
+                while (Vector3.Distance(t.position, posns[counter]) >= 0.5f)
                 {
                     t.position = Vector3.MoveTowards(t.position, posns[counter], 1f);
                     //since the enemy is moving, I need to make sure that I am following him
@@ -158,14 +162,14 @@ public class customAIMoveScript : MonoBehaviour
                     //if the path is different, update the path that I need to follow
                     posns = pathToFollow.vectorPath;
 
-                    Debug.Log("@:"+t.position +" "+target.position + " "+posns[counter]);
+                    Debug.Log("@:" + t.position + " " + target.position + " " + posns[counter]);
                     yield return new WaitForSeconds(0.2f);
                 }
                 //keep looking for a path because if we have arrived the enemy will anyway move away
                 //This code allows us to keep chasing
-                 pathToFollow = seeker.StartPath(t.position, target.position);
-                 yield return seeker.IsDone();
-                 posns = pathToFollow.vectorPath;
+                pathToFollow = seeker.StartPath(t.position, target.position);
+                yield return seeker.IsDone();
+                posns = pathToFollow.vectorPath;
                 //yield return null;
 
             }
